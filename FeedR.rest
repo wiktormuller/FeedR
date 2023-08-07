@@ -21,4 +21,10 @@ GET {{newsFeedUrl}}
 GET {{quotesFeedUrl}}
 
 ###
+POST {{quotesFeedUrl}}/pricing/start
+
+###
+POST {{quotesFeedUrl}}/pricing/stop
+
+###
 GET {{weatherFeedUrl}}
