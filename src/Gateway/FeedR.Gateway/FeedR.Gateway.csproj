@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Yarp.ReverseProxy" Version="2.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\..\Shared\FeedR.Shared\FeedR.Shared.csproj" />
     </ItemGroup>
 
