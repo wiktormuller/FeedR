@@ -2,7 +2,7 @@
 @aggregatorUrl = http://localhost:5010
 @notifierUrl = http://localhost:5020
 @newsFeedUrl = http://localhost:5030
-@quotesFeedUrl = http://localhost:5090
+@quotesFeedUrl = http://localhost:5040
 @weatherFeedUrl = http://localhost:5050
 
 ###

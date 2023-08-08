@@ -1,5 +1,6 @@
 using FeedR.Feeds.Weather.Services;
 using FeedR.Shared.HTTP;
+using FeedR.Shared.Messaging;
 using FeedR.Shared.Redis;
 using FeedR.Shared.Redis.Streaming;
 using FeedR.Shared.Serialization;

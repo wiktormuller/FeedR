@@ -1,5 +1,6 @@
 using FeedR.Feeds.Quotes.Pricing.Requests;
 using FeedR.Feeds.Quotes.Pricing.Services;
+using FeedR.Shared.Messaging;
 using FeedR.Shared.Redis;
 using FeedR.Shared.Redis.Streaming;
 using FeedR.Shared.Serialization;

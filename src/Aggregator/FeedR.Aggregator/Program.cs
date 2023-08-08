@@ -3,6 +3,7 @@ using FeedR.Shared.Redis;
 using FeedR.Shared.Streaming;
 using FeedR.Shared.Serialization;
 using FeedR.Shared.Redis.Streaming;
+using FeedR.Shared.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,9 @@ builder.Services
     .AddRedisStreaming() // The order matters
     .AddHostedService<PricingStreamBackgroundService>()
     .AddHostedService<WeatherStreamBackgroundService>()
-    .AddSerialization();
+    .AddSerialization()
+    .AddMessaging()
+    .AddSingleton<IPricingHandler, PricingHandler>();
 
 var app = builder.Build();
 
