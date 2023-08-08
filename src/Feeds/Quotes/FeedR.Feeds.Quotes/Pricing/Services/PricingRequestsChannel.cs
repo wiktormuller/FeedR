@@ -1,4 +1,4 @@
-﻿using FeedR.Feeds.Quotes.Requests;
+﻿using FeedR.Feeds.Quotes.Pricing.Requests;
 using System.Threading.Channels;
 
 namespace FeedR.Feeds.Quotes.Pricing.Services

@@ -15,6 +15,8 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
         private bool _isRunning;
         private readonly Random _random = new Random();
 
+        public event EventHandler<CurrencyPair>? PricingUpdated;
+
         public PricingGenerator(ILogger<IPricingGenerator> logger)
         {
             _logger = logger;
@@ -40,6 +42,8 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
                     _logger.LogInformation($"[{timestamp}] Updated pricing for: {symbol}, {pricing:F} -> {newPricing:F} [{tick:F}]");
                     var currencyPair = new CurrencyPair(symbol, newPricing, timestamp);
 
+                    PricingUpdated?.Invoke(this, currencyPair);
+
                     yield return currencyPair;
 
                     await Task.Delay(TimeSpan.FromSeconds(1));
@@ -59,6 +63,11 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
             var tick = _random.NextDouble() / 20;
             
             return (decimal)(sign * tick);
+        }
+
+        public IEnumerable<string> GetSymbols()
+        {
+            return _currencyPairs.Keys.ToList();
         }
     }
 }

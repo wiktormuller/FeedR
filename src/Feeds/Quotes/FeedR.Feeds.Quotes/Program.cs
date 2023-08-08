@@ -1,5 +1,5 @@
+using FeedR.Feeds.Quotes.Pricing.Requests;
 using FeedR.Feeds.Quotes.Pricing.Services;
-using FeedR.Feeds.Quotes.Requests;
 using FeedR.Shared.Redis;
 using FeedR.Shared.Redis.Streaming;
 using FeedR.Shared.Serialization;
@@ -14,9 +14,12 @@ builder.Services
     .AddSingleton<IPricingGenerator, PricingGenerator>()
     .AddSingleton<PricingRequestsChannel>()
     .AddHostedService<PricingBackgroundService>()
-    .AddSerialization();
+    .AddSerialization()
+    .AddGrpc();
 
 var app = builder.Build();
+
+app.MapGrpcService<PricingGrpcService>();
 
 app.MapGet("/", async (ctx) =>
 {

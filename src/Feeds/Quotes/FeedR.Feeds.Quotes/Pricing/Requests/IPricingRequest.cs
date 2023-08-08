@@ -1,4 +1,4 @@
-﻿namespace FeedR.Feeds.Quotes.Requests
+﻿namespace FeedR.Feeds.Quotes.Pricing.Requests
 {
     // Marker interface
     public interface IPricingRequest
