@@ -1,4 +1,5 @@
 ﻿using FeedR.Feeds.Quotes.Requests;
+using FeedR.Shared.Streaming;
 
 namespace FeedR.Feeds.Quotes.Pricing.Services
 {
@@ -8,14 +9,17 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
         private readonly IPricingGenerator _generator;
         private readonly PricingRequestsChannel _channel;
         private readonly ILogger<PricingBackgroundService> _logger;
+        private readonly IStreamPublisher _streamPublisher;
 
         public PricingBackgroundService(IPricingGenerator generator,
-            PricingRequestsChannel channel, 
-            ILogger<PricingBackgroundService> logger)
+            PricingRequestsChannel channel,
+            ILogger<PricingBackgroundService> logger,
+            IStreamPublisher streamPublisher)
         {
             _generator = generator;
             _channel = channel;
             _logger = logger;
+            _streamPublisher = streamPublisher;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -44,7 +48,12 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
                 _logger.LogInformation("Pricing generator is already running.");
                 return;
             }
-            await _generator.StartAsync();
+
+            await foreach (var currencyPair in _generator.StartAsync())
+            {
+                _logger.LogInformation("Publishing the currency pair...");
+                await _streamPublisher.PublishAsync("pricing", currencyPair);
+            }
         }
 
         private async Task StopGeneratorAsync()

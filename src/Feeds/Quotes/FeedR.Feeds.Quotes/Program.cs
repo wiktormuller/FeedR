@@ -1,13 +1,20 @@
 using FeedR.Feeds.Quotes.Pricing.Services;
 using FeedR.Feeds.Quotes.Requests;
-using System.Threading.Channels;
+using FeedR.Shared.Redis;
+using FeedR.Shared.Redis.Streaming;
+using FeedR.Shared.Serialization;
+using FeedR.Shared.Streaming;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddRedis(builder.Configuration)
+    .AddStreaming()
+    .AddRedisStreaming() // The order matters
     .AddSingleton<IPricingGenerator, PricingGenerator>()
     .AddSingleton<PricingRequestsChannel>()
-    .AddHostedService<PricingBackgroundService>();
+    .AddHostedService<PricingBackgroundService>()
+    .AddSerialization();
 
 var app = builder.Build();
 

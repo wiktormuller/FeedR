@@ -69,7 +69,7 @@ services:
 networks:
   feedr:
     name: feedr
-    #external: true
+    external: true
 
 # From /compose directory
 # docker compose -f services.yml build

@@ -20,7 +20,7 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
             _logger = logger;
         }
 
-        public async Task StartAsync()
+        public async IAsyncEnumerable<CurrencyPair> StartAsync()
         {
             _isRunning = true;
             while(_isRunning)
@@ -29,7 +29,7 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
                 {
                     if (!_isRunning)
                     {
-                        return;
+                        yield break;
                     }
 
                     var tick = NextTick();
@@ -40,7 +40,7 @@ namespace FeedR.Feeds.Quotes.Pricing.Services
                     _logger.LogInformation($"[{timestamp}] Updated pricing for: {symbol}, {pricing:F} -> {newPricing:F} [{tick:F}]");
                     var currencyPair = new CurrencyPair(symbol, newPricing, timestamp);
 
-                    // TODO: Publish it
+                    yield return currencyPair;
 
                     await Task.Delay(TimeSpan.FromSeconds(1));
                 }
