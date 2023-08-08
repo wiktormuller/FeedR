@@ -11,6 +11,7 @@ builder.Services
     .AddStreaming()
     .AddRedisStreaming() // The order matters
     .AddHostedService<PricingStreamBackgroundService>()
+    .AddHostedService<WeatherStreamBackgroundService>()
     .AddSerialization();
 
 var app = builder.Build();
