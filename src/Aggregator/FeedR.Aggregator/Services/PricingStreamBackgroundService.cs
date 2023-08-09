@@ -20,7 +20,7 @@ namespace FeedR.Aggregator.Services
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _streamSubscriber.SubscribeAsync<CurrencyPair>("pricing", (currencyPair) =>
+            await _streamSubscriber.SubscribeAsync<CurrencyPair>("pricing", async (currencyPair) =>
             {
                 _logger.LogInformation($"Pricing '{currencyPair.Symbol}' = {currencyPair.Value:F}, " +
                     $"timestamp: {currencyPair.Timestamp}");

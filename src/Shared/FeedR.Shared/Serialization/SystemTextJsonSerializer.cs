@@ -17,9 +17,15 @@ namespace FeedR.Shared.Serialization
             return JsonSerializer.Deserialize<T>(value, Options);
         }
 
+        public T? DeserializeBytes<T>(byte[] value) where T : class
+            => JsonSerializer.Deserialize<T>(value, Options);
+
         public string Serialize<T>(T value) where T : class
         {
             return JsonSerializer.Serialize(value, Options);
         }
+
+        public byte[] SerializeBytes<T>(T value) where T : class
+            => JsonSerializer.SerializeToUtf8Bytes(value, Options);
     }
 }
