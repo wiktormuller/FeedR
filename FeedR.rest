@@ -2,11 +2,11 @@
 @aggregatorUrl = http://localhost:5010
 @notifierUrl = http://localhost:5020
 @newsFeedUrl = http://localhost:5030
-@quotesFeedUrl = http://localhost:5040
+@quotesFeedUrl = http://localhost:5090
 @weatherFeedUrl = http://localhost:5050
 
 ###
-GET {{gatewayUrl}}
+POST {{gatewayUrl}}/feeds/quotes/pricing/start
 
 ###
 GET {{aggregatorUrl}}

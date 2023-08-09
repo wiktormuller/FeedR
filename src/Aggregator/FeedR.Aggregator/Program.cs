@@ -5,10 +5,12 @@ using FeedR.Shared.Serialization;
 using FeedR.Shared.Redis.Streaming;
 using FeedR.Shared.Messaging;
 using FeedR.Shared.Pulsar;
+using FeedR.Shared.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddHttpContextAccessor()
     .AddRedis(builder.Configuration)
     .AddStreaming()
     .AddRedisStreaming() // The order matters here
@@ -20,6 +22,8 @@ builder.Services
     .AddSingleton<IPricingHandler, PricingHandler>();
 
 var app = builder.Build();
+
+app.UseCorrelationId();
 
 app.MapGet("/", async (ctx) =>
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 
@@ -10,7 +11,9 @@ namespace FeedR.Shared.HTTP
             where TInterface : class where TClient : class, TInterface
         {
             services
+                .AddTransient<CorrelationIdMessageHandler>()
                 .AddHttpClient<TInterface, TClient>()
+                .AddHttpMessageHandler<CorrelationIdMessageHandler>()
                 .AddPolicyHandler(GetRetryPolicy());
 
             return services;

@@ -24,7 +24,7 @@ namespace FeedR.Shared.Pulsar
             _consumerName = Assembly.GetEntryAssembly()?.FullName?.Split(",")[0].ToLowerInvariant() ?? string.Empty;
         }
 
-        public async Task SubscribeAsync<T>(string topic, Action<T> handler) where T : class, Messaging.IMessage
+        public async Task SubscribeAsync<T>(string topic, Action<MessageEnvelope<T>> handler) where T : class, Messaging.IMessage
         {
             var subscription = $"{_consumerName}_{topic}"; // Unique subscription (something like queue for subscriber)
             var consumer = _client.NewConsumer()
@@ -36,6 +36,7 @@ namespace FeedR.Shared.Pulsar
             {
                 var producer = message.Properties["producer"];
                 var customId = message.Properties["custom_id"];
+                var correlationId = message.Properties["correlationId"];
 
                 _logger.LogInformation($"Received a message with ID: '{message.MessageId}' from: '{producer}' with CustomId: '{customId}'");
                 var payload = _serializer.DeserializeBytes<T>(message.Data.FirstSpan.ToArray());
@@ -44,7 +45,7 @@ namespace FeedR.Shared.Pulsar
                 {
                     var json = _serializer.Serialize(payload);
                     _logger.LogInformation(json);
-                    handler(payload);
+                    handler(new MessageEnvelope<T>(payload, correlationId));
                 }
 
                 await consumer.Acknowledge(message); // ACK

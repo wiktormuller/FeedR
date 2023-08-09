@@ -1,4 +1,6 @@
 using Yarp.ReverseProxy.Transforms;
+using FeedR.Shared.Observability;
+using System.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +11,8 @@ builder.Services
     {
         transforms.AddRequestTransform(transform =>
         {
-            var requestId = Guid.NewGuid().ToString("N");
-            transform.ProxyRequest.Headers.Add("x-request-id", requestId);
+            var correlationId = Guid.NewGuid().ToString("N");
+            transform.ProxyRequest.Headers.AddCorrelationId(correlationId);
 
             return ValueTask.CompletedTask;
         });

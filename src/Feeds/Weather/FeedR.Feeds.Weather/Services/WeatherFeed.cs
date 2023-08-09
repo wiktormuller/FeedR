@@ -8,8 +8,8 @@ namespace FeedR.Feeds.Weather.Services
         private readonly HttpClient _httpClient;
 
         // TODO: Move this values to appsettings
-        private const string ApiKey = "secret";
-        private const string ApiUrl = "https://api.weatherapi.com/v22/current.json";
+        private const string ApiKey = "secret ";
+        private const string ApiUrl = "https://api.weatherapi.com/v1/current.json";
 
         public WeatherFeed(HttpClient client)
         {

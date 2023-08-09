@@ -19,7 +19,8 @@ namespace FeedR.Notifier.Services
         {
             _messageSubscriber.SubscribeAsync<OrderPlaced>("orders", message =>
             {
-                _logger.LogInformation($"Order with ID: '{message.OrderId}' for symbol: '{message.Symbol}' has been placed.");
+                _logger.LogInformation($"Order with ID: '{message.Message.OrderId}' for symbol: " +
+                    $"'{message.Message.Symbol}' has been placed. The CorrelationId: '{message.CorrelationId}'");
             });
 
             return Task.CompletedTask;
