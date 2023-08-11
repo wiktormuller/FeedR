@@ -13,7 +13,7 @@ The overall repository structure consists of the following projects located unde
 
 # Info
 
-This repo is made as a part of learning path. The source code comes from this briliant series: [DevMentors(]https://www.youtube.com/watch?v=spnBzawswik&list=PLqqD43D6Mqz0AIDkHqaZDKaEKXdfMiIAo)
+This repo is made as a part of learning path. The source code comes from this briliant series: [DevMentors](https://www.youtube.com/watch?v=spnBzawswik&list=PLqqD43D6Mqz0AIDkHqaZDKaEKXdfMiIAo)
 
 # Requirements
 
